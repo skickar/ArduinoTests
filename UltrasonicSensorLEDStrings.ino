@@ -51,8 +51,9 @@ else if (int(distance)>trigger) // If no one is there, we subtract one from the 
 if (cooldown > 0) { // Turn on the lights and subtract one from cooldown if the value of cooldown is positive
   turnon(), cooldown--; }
 else if (cooldown < 1) { // Turn off the lights 
-  turnoff(),cooldown--; } // Why am I subtracting another from the cooldown timer? 
+  turnoff()//,cooldown--; } // Why am I subtracting another from the cooldown timer? 
 //Should change this but doesn't seem to be a problem
-
+Serial.print("Cooldown: ");
+Serial.println(cooldown);
 delay(100);
 }
