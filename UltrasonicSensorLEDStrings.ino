@@ -3,21 +3,21 @@ const int trigPin = 2;  //D4
 const int echoPin = 0;  //D3
 
 // defines variables
-long duration;
-int distance;
-int trigger = 1900;
-int cooldown = 0;
+long duration; 
+int distance; // distance to the sensor of an object
+int trigger = 1900; // The range at which we say there is an object detected (infinity is past 2000)
+int cooldown = 0; // Creating the cooldown timer, which we can add to when we detect something. This is checked later.
 
 void setup() {
 pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
 pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-Serial.begin(9600); // Starts the serial communication
+Serial.begin(9600); // Starts the serial communication so we can debug and position the sensor
 pinMode(D5, OUTPUT); 
 
 }
-void turnon() {
+void turnon() { // A function to turn the LED strips on
   digitalWrite(D5, HIGH); }  // Turn the LED on by making the voltage HIGH
-void turnoff() {
+void turnoff() { // A function to turn the LED strips off
   digitalWrite(D5, LOW); }  // Turn the LED off by making the voltage LOW
 
 void loop() {
@@ -38,18 +38,21 @@ distance= duration*0.034/2;
 // Prints the distance on the Serial Monitor
 Serial.print("Distance: ");
 Serial.println(distance);
-if (int(distance)<trigger)
+// Checks if the distance indicates someone is near by comparing against the trigger value
+if (int(distance)<trigger) // Adds 50 to the cooldown timer if a person is detected
 {
   cooldown = 50;
 }
-else if (int(distance)>trigger)
+else if (int(distance)>trigger) // If no one is there, we subtract one from the timer. 
+// Was worried this could make the cooldown increasingly negative, but doesn't seem to be a problem in testing
 {
   cooldown--;
 }
-if (cooldown > 0) {
+if (cooldown > 0) { // Turn on the lights and subtract one from cooldown if the value of cooldown is positive
   turnon(), cooldown--; }
-else if (cooldown < 1) {
-  turnoff(),cooldown--; }
+else if (cooldown < 1) { // Turn off the lights 
+  turnoff(),cooldown--; } // Why am I subtracting another from the cooldown timer? 
+//Should change this but doesn't seem to be a problem
 
 delay(100);
 }
