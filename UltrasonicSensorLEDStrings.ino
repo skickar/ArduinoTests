@@ -36,23 +36,21 @@ duration = pulseIn(echoPin, HIGH);
 // Calculating the distance
 distance= duration*0.034/2;
 // Prints the distance on the Serial Monitor
+// Prints the distance on the Serial Monitor
 Serial.print("Distance: ");
 Serial.println(distance);
-// Checks if the distance indicates someone is near by comparing against the trigger value
-if (int(distance)<trigger) // Adds 50 to the cooldown timer if a person is detected
+if (int(distance)<trigger)
 {
   cooldown = 50;
 }
-else if (int(distance)>trigger) // If no one is there, we subtract one from the timer. 
-// Was worried this could make the cooldown increasingly negative, but doesn't seem to be a problem in testing
+else if (int(distance)>trigger)
 {
-  cooldown--;
+//I removed this
 }
-if (cooldown > 0) { // Turn on the lights and subtract one from cooldown if the value of cooldown is positive
+if (cooldown > 0) {
   turnon(), cooldown--; }
-else if (cooldown < 1) { // Turn off the lights 
-  turnoff()//,cooldown--; } // Why am I subtracting another from the cooldown timer? 
-//Should change this but doesn't seem to be a problem
+else if (cooldown == 0) {
+  turnoff(); }
 Serial.print("Cooldown: ");
 Serial.println(cooldown);
 delay(100);
