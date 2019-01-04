@@ -22,8 +22,8 @@ aREST rest = aREST(client);
 char* device_id = "unique_device_id";
 
 // WiFi parameters
-const char* ssid = "Harmond Fernandez";
-const char* password = "alpha196gamma1";
+const char* ssid = "NetworkName";
+const char* password = "Password";
 
 // Variables to be exposed to the API
 int temperature;
