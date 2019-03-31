@@ -28,7 +28,6 @@ void blinkWhite(int numbBlinks){
 // This blinks the LED according to which LED you specify and how many blinks
 void blinkLed(int currentLed, int numbBlinks){
   for (int i = 0; i < numbBlinks; i ++){
-  // This function blinks the LED according to the delay at the intensity specified by the "intensity" variable
   analogWrite(currentLed, highValue);
   delay(delayTime);
   analogWrite(currentLed, 0);
