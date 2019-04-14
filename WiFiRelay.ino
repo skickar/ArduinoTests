@@ -3,7 +3,7 @@
   This example illustrate the cloud part of aREST that makes the board accessible from anywhere
   See the README file for more details.
 
-  Written in 2015 by Marco Schwartz under a GPL license and forked by Skickar
+  Written in 2015 by Marco Schwartz under a GPL license, forked by Skickar and MinePro120
 */
 
 // Import required libraries
@@ -22,16 +22,18 @@ aREST rest = aREST(client);
 char* device_id = "unique_device_id";
 
 // WiFi parameters
-const char* ssid = "NetworkName";
-const char* password = "Password";
+const char* ssid = "<Your network's SSID here>";
+const char* password = "<Your network's password here>";
+const char* mssid = "<The desired SSID of the AP here>";    //see line 47 for more AP options, and edit line 54
+const char* mpassword = "<The desired password of the AP here>";
 
 // Variables to be exposed to the API
 int temperature;
 int humidity;
 String local_ip = "";
 
-// The port to listen for incoming TCP connections
-#define LISTEN_PORT           80
+// The port to listen for incoming TCP connections. You are advised to change this.
+#define LISTEN_PORT 80
 
 // Create an instance of the server
 WiFiServer server(LISTEN_PORT);
@@ -41,6 +43,17 @@ void callback(char* topic, byte* payload, unsigned int length);
 
 void setup(void)
 {
+  /* Create a Soft AP
+    mssid - character string containing network SSID (max. 31 characters)
+    mpassword - optional character string with a password. For WPA2-PSK network it should be at least 8 character long. If not specified, the access point will be open for anybody to connect, (max. 63 characters).
+    channel - optional parameter to set Wi-Fi channel, from 1 to 13. Default channel = 1.
+    hidden - optional parameter, if set to true will hide SSID.
+    max_connection - optional parameter to set max simultaneous connected stations, from 0 to 8. Defaults to 4. Once the max number has been reached, any other station that wants to connect will be forced to wait until an already connected station disconnects.
+  */
+  Serial.print("Setting soft-AP... ");
+  Serial.println(WiFi.softAP(mssid, mpassword, channel, hidden, max_connection) ? "Ready" : "Failed!");
+  Serial.print("Soft-AP IP address = ");
+  Serial.println(WiFi.softAPIP());
   // Start Serial
   Serial.begin(115200);
 
